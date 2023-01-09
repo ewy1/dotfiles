@@ -1,1 +1,1 @@
-/home/ewout/.bash_profile
+./.bash_profile
