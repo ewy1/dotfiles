@@ -1,0 +1,22 @@
+# start uwushot (screenshot wrapper)
+bindsym Print exec uwushot
+
+# open uwupass (password paster)
+bindsym $mod+p exec uwupass
+
+# start rofi (program launcher)
+bindsym $mod+d exec --no-startup-id rofi -show combi
+
+# start a terminal
+bindsym $mod+Return exec kitty
+
+# toggle compositor
+bindsym $mod+Shift+p exec toggle-compositor
+
+# dismiss notifications
+bindsym $mod+grave exec dunstctl close-all
+
+# mpd
+bindsym $mod+slash exec mpc toggle
+bindsym $mod+comma exec mpc prev
+bindsym $mod+period exec mpc next

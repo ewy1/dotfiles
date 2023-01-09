@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+if pidof picom; then
+    killall picom
+else
+    picom -b
+fi
+

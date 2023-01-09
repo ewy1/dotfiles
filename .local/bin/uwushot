@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# rsync destination domain name (or ip)
+HOST="uwu.ewy.one"
+# user owning the target folder
+USER=ewout
+# target path on the server (must be owned by the user)
+TARGET=/var/www/uwu
+# screenshot save directory
+SAVEDIR=/tmp/screenies
+
+mkdir -p $SAVEDIR
+
+SCREENIE=$(flameshot gui -p "${SAVEDIR}" |& awk '{ print $NF }')
+
+rsync "${SCREENIE}" "${USER}@${HOST}:${TARGET}"
+
+URL=$(basename "${SCREENIE}")
+
+echo -n "https://${HOST}/${URL}" | xclip

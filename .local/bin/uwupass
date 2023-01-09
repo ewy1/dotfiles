@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# Load configuration script
+set -euo pipefail
+source "${XDG_CONFIG_HOME:-$HOME/.config}/uwupass"
+# Compose the database opening command
+dbQuery() {
+    command="keepassxc-cli $*"
+    [[ -e ${KEYFILE:-} ]] && command="$command -k $KEYFILE"
+    [[ -e ${YUBIKEY:-} ]] && command="$command -y"
+    command="$command $DATABASE"
+    echo "$command"
+}
+
+# Decrypt the pgp password
+pass=$(gpg --decrypt "$PGP_KEY")
+# Send the entries to dmenu
+entry=$(echo "$pass" | eval "$(dbQuery ls -R -f)" | $DMENU -p "Select entry")
+
+# Retreive the target password
+target=$(echo "$pass" | eval "$(dbQuery show -s)" -a Password \"$entry\")
+
+# Write the password
+xdotool type "$target"
+notify-send -u low "uwupass" "Finished writing password."
+
+# Copy TOTP to clipboard
+echo "$(echo "$pass" | eval "$(dbQuery show -s -t)" \"$entry\")" | xclip
+notify-send -u low "uwupass" "Copied TOTP to clipboard."

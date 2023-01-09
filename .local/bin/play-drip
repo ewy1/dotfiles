@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+play $HOME/.local/resources/drip.mp3

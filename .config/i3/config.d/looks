@@ -1,0 +1,28 @@
+# Gaps
+gaps inner 8
+smart_gaps on
+
+# Border
+default_border pixel
+
+# Titlebars
+
+title_align center
+
+# Set variables from XResources
+set_from_resource $fg i3wm.foreground #f0f0f0
+set_from_resource $bg i3wm.background #f0f0f0
+set_from_resource $c1 i3wm.color1 #f0f0f0
+set_from_resource $c2 i3wm.color2 #f0f0f0
+set_from_resource $c3 i3wm.color3 #f0f0f0
+set_from_resource $c4 i3wm.color4 #f0f0f0
+
+# class                 border  backgr. text indicator child_border
+client.focused          $c3     $bg     $fg  $bg       $bg
+client.focused_inactive $c3     $bg     $fg  $bg       $bg
+client.unfocused        $c1     $bg     $c4  $bg       $bg
+client.urgent           $c1     $bg     $c4  $bg       $bg
+client.placeholder      $c1     $bg     $c4  $bg       $bg
+client.background       $bg
+
+font pango:Operator Mono Book 12
