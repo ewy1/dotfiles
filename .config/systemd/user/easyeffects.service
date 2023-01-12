@@ -1,5 +1,5 @@
 [Service]
-ExecStart=/usr/bin/env DISPLAY=:0 /usr/bin/easyeffects --gapplication-service
+ExecStart=/usr/bin/easyeffects --gapplication-service
 Restart=always
 RestartSec=5
 

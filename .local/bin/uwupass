@@ -19,10 +19,11 @@ entry=$(echo "$pass" | eval "$(dbQuery ls -R -f)" | $DMENU -p "Select entry")
 # Retreive the target password
 target=$(echo "$pass" | eval "$(dbQuery show -s)" -a Password \"$entry\")
 
+# Copy TOTP to clipboard
+echo "$(echo "$pass" | eval "$(dbQuery show -s -t)" \"$entry\")" | xclip
+notify-send -u low "uwupass" "Copied TOTP to clipboard."
+
 # Write the password
 xdotool type "$target"
 notify-send -u low "uwupass" "Finished writing password."
 
-# Copy TOTP to clipboard
-echo "$(echo "$pass" | eval "$(dbQuery show -s -t)" \"$entry\")" | xclip
-notify-send -u low "uwupass" "Copied TOTP to clipboard."
