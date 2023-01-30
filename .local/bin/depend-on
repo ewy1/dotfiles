@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -euo pipefail
+sudo pacman -Sy "$@"
+echo "$@" >> ${XDG_CONFIG_HOME:-$HOME/.config}/dependencies
