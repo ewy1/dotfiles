@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
+deps=${XDG_CONFIG_HOME:-$HOME/.config}/dependencies
 sudo pacman -Sy "$@"
-echo "$@" >> ${XDG_CONFIG_HOME:-$HOME/.config}/dependencies
+echo "$@" >> $deps
+sort $deps > $deps
