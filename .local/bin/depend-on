@@ -3,4 +3,4 @@ set -euo pipefail
 deps=${XDG_CONFIG_HOME:-$HOME/.config}/dependencies
 sudo pacman -Sy "$@"
 echo "$@" >> $deps
-sort $deps > $deps
+cat $deps | sort | uniq > $deps
