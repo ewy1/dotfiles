@@ -1,4 +1,14 @@
 #!/usr/bin/env bash
+
+### BEFORE USE ###
+# 1. Create .config/uwupass
+# 2. Set the following variables in it:
+#    KEYFILE (if you have a keyfile encrypted db)
+#    YUBIKEY (if you have a yubikey encrypted db)
+#    PGP_KEY (path to your pgp encrypted password file)
+#    DATABASE (path to keepass db)
+###
+
 # Load configuration script
 set -euo pipefail
 source "${XDG_CONFIG_HOME:-$HOME/.config}/uwupass"
