@@ -3,15 +3,38 @@
 ### BEFORE USE ###
 # 1. Create .config/uwupass
 # 2. Set the following variables in it:
+#    DATABASE (path to keepass db) (REQUIRED)
+#    PGP_KEY (path to your pgp encrypted password file) (REQUIRED)
+#    DMENU (dmenu script to feed options into, will fall back to dmenu)
 #    KEYFILE (if you have a keyfile encrypted db)
 #    YUBIKEY (if you have a yubikey encrypted db)
-#    PGP_KEY (path to your pgp encrypted password file)
-#    DATABASE (path to keepass db)
 ###
 
 # Load configuration script
 set -euo pipefail
-source "${XDG_CONFIG_HOME:-$HOME/.config}/uwupass"
+config="${XDG_CONFIG_HOME:-$HOME/.config}/uwupass"
+if [[ -e $config ]]; then
+    source "$config"
+else
+    echo "Configuration file not found; check the source code for more information."
+    exit 1
+fi
+
+if [[ -z ${DATABASE} || -z ${PGP_KEY} ]]; then
+    echo "Required settings not specified; check the source code for more information."
+    exit 1
+fi
+
+if [[ ! command -v keepassxc-cli ]]; then
+    echo "keepassxc-cli not found; please install keepassxc-cli."
+    exit 1
+fi
+
+if [[ ! command -v gpg ]]; then
+    echo "gpg not found; please install gpg."
+    exit 1
+fi
+
 # Compose the database opening command
 dbQuery() {
     command="keepassxc-cli $*"
@@ -24,10 +47,10 @@ dbQuery() {
 # Decrypt the pgp password
 pass=$(gpg --decrypt "$PGP_KEY")
 # Send the entries to dmenu
-entry=$(echo "$pass" | eval "$(dbQuery ls -R -f)" | $DMENU -p "Select entry")
+entry=$(echo "$pass" | eval "$(dbQuery ls -R -f)" | ${DMENU:-dmenu} -p "Select entry")
 
 # Retreive the target password
-target=$(echo "$pass" | eval "$(dbQuery show -s)" -a Password \"$entry\")
+target=$(echo "$pass" | eval "$(dbQuery show -s)" -a Password "$entry")
 
 
 # Write the password
@@ -35,7 +58,8 @@ xdotool type "$target"
 notify-send -u low "uwupass" "Finished writing password."
 
 # Copy TOTP to clipboard
-totp="$(echo "$pass" | eval "$(dbQuery show -s -t)" \"$entry\")"
-if [[ ! -z "$totp" ]]; then
-    notify-send -u low "uwupass" "Copied TOTP ($totp) to clipboard."
+totp="$(echo "$pass" | eval "$(dbQuery show -s -t)" "$entry")"
+if [[ -n "$totp" ]]; then
+    notify-send -u low "uwupass" "Copied TOTP ($totp) to selection."
+    xclip && echo "$totp" | xclip
 fi
