@@ -1,3 +1,10 @@
 #!/usr/bin/env bash
-cd $(git rev-parse --show-cdup)
-eval $@
+set -euo pipefail
+if [[ -z "$@" ]]; then
+	echo "Run a command in the root of the current git repository. Does nothing when not in a repository."
+	echo "Example: \"git run ls --color=auto\""
+else
+	root=$(git rev-parse --show-cdup)
+	cd $root
+	eval $@
+fi
