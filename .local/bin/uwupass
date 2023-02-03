@@ -13,25 +13,33 @@
 # Load configuration script
 set -euo pipefail
 config="${XDG_CONFIG_HOME:-$HOME/.config}/uwupass"
+
+message() {
+    case $- in
+        *i*) notify-send -u low "uwupass" "$@";;
+        *) echo "$@";;
+    esac
+}
+
 if [[ -e $config ]]; then
     source "$config"
 else
-    echo "Configuration file not found; check the source code for more information."
+    message "Configuration file not found; check the source code for more information."
     exit 1
 fi
 
 if [[ -z ${DATABASE} || -z ${PGP_KEY} ]]; then
-    echo "Required settings not specified; check the source code for more information."
+    message "Required settings not specified; check the source code for more information."
     exit 1
 fi
 
-if [[ ! command -v keepassxc-cli ]]; then
-    echo "keepassxc-cli not found; please install keepassxc-cli."
+if ! command -v keepassxc-cli; then
+    message "keepassxc-cli not found; please install keepassxc-cli."
     exit 1
 fi
 
-if [[ ! command -v gpg ]]; then
-    echo "gpg not found; please install gpg."
+if ! command -v gpg; then
+    message "gpg not found; please install gpg."
     exit 1
 fi
 
@@ -41,6 +49,7 @@ dbQuery() {
     [[ -e ${KEYFILE:-} ]] && command="$command -k $KEYFILE"
     [[ -e ${YUBIKEY:-} ]] && command="$command -y"
     command="$command $DATABASE"
+    # Don't use message here, because this essentially returns a value
     echo "$command"
 }
 
@@ -55,11 +64,11 @@ target=$(echo "$pass" | eval "$(dbQuery show -s)" -a Password "$entry")
 
 # Write the password
 xdotool type "$target"
-notify-send -u low "uwupass" "Finished writing password."
+message "Finished writing password."
 
 # Copy TOTP to clipboard
 totp="$(echo "$pass" | eval "$(dbQuery show -s -t)" "$entry")"
 if [[ -n "$totp" ]]; then
-    notify-send -u low "uwupass" "Copied TOTP ($totp) to selection."
+    message "Copied TOTP ($totp) to selection."
     echo "$totp" | xclip
 fi
