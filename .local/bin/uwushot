@@ -1,26 +1,17 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
 ### BEFORE USE ###
-# 1. Create .config/uwupass
+# 1. Create .config/uwushot
 # 2. Set the following variables in it:
-#    DATABASE (path to keepass db) (REQUIRED)
-#    PGP_KEY (path to your pgp encrypted password file) (REQUIRED)
-#    DMENU (dmenu script to feed options into, will fall back to dmenu)
-#    KEYFILE (if you have a keyfile encrypted db)
-#    YUBIKEY (if you have a yubikey encrypted db)
+#    HOST (domain name or ip of the rsync destination) (REQUIRED)
+#	 USER (user owning the host target folder) (REQUIRED)
+#    TARGET (target folder on the server) (REQUIRED)
+#    SAVEDIR (local directory to save screenshots in) (REQUIRED)
+# 3. Ensure you the target server is trusted and accepts rsync without interactions
 ###
 
-# Load configuration script
-set -euo pipefail
-config="${XDG_CONFIG_HOME:-$HOME/.config}/uwupass"
-
-message() {
-    case $- in
-        *i*) notify-send -u low "uwupass" "$@";;
-        *) echo "$@";;
-    esac
-}
-
+config="${XDG_CONFIG_HOME:-$HOME/.config}/uwushot"
 if [[ -e $config ]]; then
     source "$config"
 else
@@ -28,47 +19,17 @@ else
     exit 1
 fi
 
-if [[ -z ${DATABASE} || -z ${PGP_KEY} ]]; then
-    message "Required settings not specified; check the source code for more information."
-    exit 1
+if [[ -z ${HOST} || -z ${USER} || -z ${TARGET} || -z ${SAVEDIR} ]]; then
+	message "Required settings not specified; check the source code for more information."
+	exit 1
 fi
 
-if ! command -v keepassxc-cli; then
-    message "keepassxc-cli not found; please install keepassxc-cli."
-    exit 1
-fi
+mkdir -p $SAVEDIR
 
-if ! command -v gpg; then
-    message "gpg not found; please install gpg."
-    exit 1
-fi
+SCREENIE=$(flameshot gui -p "${SAVEDIR}" |& awk '{ print $NF }')
 
-# Compose the database opening command
-dbQuery() {
-    command="keepassxc-cli $*"
-    [[ -e ${KEYFILE:-} ]] && command="$command -k $KEYFILE"
-    [[ -e ${YUBIKEY:-} ]] && command="$command -y"
-    command="$command $DATABASE"
-    # Don't use message here, because this essentially returns a value
-    echo "$command"
-}
+rsync "${SCREENIE}" "${USER}@${HOST}:${TARGET}"
 
-# Decrypt the pgp password
-pass=$(gpg --decrypt "$PGP_KEY")
-# Send the entries to dmenu
-entry=$(echo "$pass" | eval "$(dbQuery ls -R -f)" | ${DMENU:-dmenu} -p "Select entry")
+URL=$(basename "${SCREENIE}")
 
-# Retreive the target password
-target=$(echo "$pass" | eval "$(dbQuery show -s)" -a Password "$entry")
-
-
-# Write the password
-xdotool type "$target"
-message "Finished writing password."
-
-# Copy TOTP to clipboard
-totp="$(echo "$pass" | eval "$(dbQuery show -s -t)" "$entry")"
-if [[ -n "$totp" ]]; then
-    message "Copied TOTP ($totp) to selection."
-    echo "$totp" | xclip
-fi
+echo -n "https://${HOST}/${URL}" | xclip
