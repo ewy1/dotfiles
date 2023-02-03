@@ -61,5 +61,5 @@ notify-send -u low "uwupass" "Finished writing password."
 totp="$(echo "$pass" | eval "$(dbQuery show -s -t)" "$entry")"
 if [[ -n "$totp" ]]; then
     notify-send -u low "uwupass" "Copied TOTP ($totp) to selection."
-    xclip && echo "$totp" | xclip
+    echo "$totp" | xclip
 fi
