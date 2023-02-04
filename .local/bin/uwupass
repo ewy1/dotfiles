@@ -16,8 +16,8 @@ config="${XDG_CONFIG_HOME:-$HOME/.config}/uwupass"
 
 message() {
     case $- in
-        *i*) notify-send -u low "uwupass" "$@";;
-        *) echo "$@";;
+        *i*) echo "$@";;
+        *) notify-send -u low "uwupass" "$@";;
     esac
 }
 
@@ -59,7 +59,7 @@ pass=$(gpg --decrypt "$PGP_KEY")
 entry=$(echo "$pass" | eval "$(dbQuery ls -R -f)" | ${DMENU:-dmenu} -p "Select entry")
 
 # Retreive the target password
-target=$(echo "$pass" | eval "$(dbQuery show -s)" -a Password "$entry")
+target=$(echo "$pass" | eval "$(dbQuery show -s)" -a Password \"$entry\")
 
 
 # Write the password
@@ -67,7 +67,7 @@ xdotool type "$target"
 message "Finished writing password."
 
 # Copy TOTP to clipboard
-totp="$(echo "$pass" | eval "$(dbQuery show -s -t)" "$entry")"
+totp="$(echo "$pass" | eval "$(dbQuery show -s -t)" \"$entry\"")"
 if [[ -n "$totp" ]]; then
     message "Copied TOTP ($totp) to selection."
     echo "$totp" | xclip
