@@ -1,15 +1,28 @@
 #!/usr/bin/env bash
 
 set -euo pipefail
+### BEFORE USE ###
+# 1. Create .config/uwushot
+# 2. Set the following variables in it:
+#    HOST (domain name or ip of the rsync destination) (REQUIRED)
+#	 USER (user owning the host target folder) (REQUIRED)
+#    TARGET (target folder on the server) (REQUIRED)
+#    SAVEDIR (local directory to save screenshots in) (REQUIRED)
+# 3. Ensure you the target server is trusted and accepts rsync without interactions
+###
 
-# rsync destination domain name (or ip)
-HOST="uwu.ewy.one"
-# user owning the target folder
-USER=ewout
-# target path on the server (must be owned by the user)
-TARGET=/var/www/uwu
-# screenshot save directory
-SAVEDIR=/tmp/screenies
+config="${XDG_CONFIG_HOME:-$HOME/.config}/uwushot"
+if [[ -e $config ]]; then
+    source "$config"
+else
+    message "Configuration file not found; check the source code for more information."
+    exit 1
+fi
+
+if [[ -z ${HOST} || -z ${USER} || -z ${TARGET} || -z ${SAVEDIR} ]]; then
+	message "Required settings not specified; check the source code for more information."
+	exit 1
+fi
 
 mkdir -p $SAVEDIR
 
