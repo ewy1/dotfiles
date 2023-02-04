@@ -4,6 +4,9 @@ bindsym Print exec uwushot
 # open uwupass (password paster)
 bindsym $mod+p exec uwupass
 
+# toggle mic mute
+bindsym Pause exec toggle-mute
+
 # start rofi (program launcher)
 bindsym $mod+d exec --no-startup-id rofi -show combi
 
