@@ -15,10 +15,7 @@ set -euo pipefail
 config="${XDG_CONFIG_HOME:-$HOME/.config}/uwupass"
 
 message() {
-    case $- in
-        *i*) echo "$@";;
-        *) notify-send -u low "uwupass" "$@";;
-    esac
+    notify-send -u low "uwupass" "$@";;
 }
 
 if [[ -e $config ]]; then
