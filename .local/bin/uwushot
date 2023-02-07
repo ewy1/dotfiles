@@ -11,6 +11,10 @@ set -euo pipefail
 # 3. Ensure you the target server is trusted and accepts rsync without interactions
 ###
 
+message() {
+    notify-send -u low "uwupass" "$@"
+}
+
 config="${XDG_CONFIG_HOME:-$HOME/.config}/uwushot"
 if [[ -e $config ]]; then
     source "$config"
