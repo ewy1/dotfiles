@@ -104,3 +104,4 @@ video/vnd.rn-realvideo=mpv.desktop
 video/ogg=mpv.desktop
 video/vnd.mpegurl=mpv.desktop
 video/quicktime=mpv.desktop
+text/html=firefoxdeveloperedition.desktop
