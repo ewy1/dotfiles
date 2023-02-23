@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+set -euo pipefail
+### Help
+if [[ -z "$*" ]]; then
+	echo "Switch branches based on ticket number or branch name."
+	echo "  Usage: git ticket <ticketnumber>"
+	echo "  Example: git ticket 26329"
+	echo "  Example: git ticket translation"
+	exit 1
+fi
+
+### Get branches
+git fetch
+ticket=$*
+branches=($(git for-each-ref --ignore-case --format='%(refname:short)' "refs/remotes/**/*$ticket*"))
+
+if [[ -z ${branches[*]} ]]; then
+	echo "No branches found related to $*"
+	exit
+fi
+
+### Pick branch
+max=${#branches[@]}
+if [[ $max = 1 ]]; then
+	branch=${branches[0]}
+else
+	count=1
+	for b in "${branches[@]}"; do
+		label=${b:7}
+		index="$count. "
+		[[ $label == "bug/"* ]] && index="\e[31m$index"
+		[[ $label == "epic/"* ]] && index="\e[1;33m$index"
+		[[ $label == "story/"* ]] && index="\e[34m$index"
+		echo -e "${index}${label}\e[0m"
+		count=$((count+1))
+	done
+	read -r -p "Choose branch (<Enter>: $max): " pick
+	branch=${branches[((${pick:-$max} - 1))]}
+fi
+
+### Extract and checkout branch
+remoteBranch="${branch}"
+localBranch="${branch:7}"
+if [[ -z "$localBranch" ]]; then
+	echo "Could not find branch associated with $ticket"
+else
+	echo "Switching to $branch"
+	git checkout --track -B "$localBranch" "$remoteBranch"
+fi
