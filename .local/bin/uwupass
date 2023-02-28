@@ -64,7 +64,8 @@ xdotool type "$target"
 message "Finished writing password."
 
 # Copy TOTP to clipboard
-totp="$(echo "$pass" | eval "$(dbQuery show -s -t)" \"$entry\"")"
+totp="$(echo "$pass" | eval "$(dbQuery show -s -t)" \"$entry\")"
+echo $totp
 if [[ -n "$totp" ]]; then
     message "Copied TOTP ($totp) to selection."
     echo "$totp" | xclip
