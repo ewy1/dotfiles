@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+ln "$(cat /home/ewout/.cache/wal/wal)" "/home/ewout/.cache/wal/current"
