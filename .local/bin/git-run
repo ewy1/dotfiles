@@ -7,7 +7,7 @@ if [[ -z "$*" ]]; then
 else
 	cd "$(git rev-parse --show-cdup)"
 	if [[ -e ".git/scripts/$1" ]]; then
-		echo "Running local repository script $1"
+		echo "Running local repository script: $1"
 		eval ".git/scripts/$1" "${@:2}"
 	else
 		eval "$@"
