@@ -8,6 +8,7 @@ set number
 set scrolloff=5
 
 set incsearch
+set hlsearch
 
 "Wal colors
 source ~/.cache/wal/colors-wal.vim
