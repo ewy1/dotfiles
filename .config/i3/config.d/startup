@@ -1,18 +1,18 @@
 # Autotiler
 exec --no-startup-id autotiling
 
-# Discord
-exec --no-startup-id discord
-
 # EasyEffects (delayed)
 exec --no-startup-id (sleep 5 && systemctl start --user easyeffects)
 
 # Lock screen using local script
 exec --no-startup-id xss-lock lock
 
+# Solaar (for logitech mice)
+exec --no-startup-id solaar --window=hide
+
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
-exec --no-startup-id dex --autostart --environment i3
+exec --no-startup-id dex --autostart --environment sway
 
 # Start picom with experimental backends (for nvidia)
 exec --no-startup-id picom -b

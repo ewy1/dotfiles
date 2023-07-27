@@ -1,3 +1,2 @@
-exec_always --no-startup-id "killall polybar"
-exec_always --no-startup-id "sleep 3 && polybar primary"
+exec_always --no-startup-id "sleep 2 && polybar primary"
 exec_always --no-startup-id "sleep 3 && polybar secondary"

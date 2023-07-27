@@ -6,6 +6,10 @@ bindsym $mod+p exec uwupass
 
 # toggle mic mute
 bindsym Pause exec toggle-mute
+bindsym $mod+Pause exec headset-battery
+
+# uncapture cursor
+bindsym Shift+Pause exec "notify-send 'Releasing cursor' && setxkbmap -option grab:break_actions && xdotool key XF86Ungrab"
 
 # start rofi (program launcher)
 bindsym $mod+d exec --no-startup-id rofi -show combi
@@ -23,3 +27,6 @@ bindsym $mod+grave exec dunstctl close-all
 bindsym $mod+slash exec mpc toggle
 bindsym $mod+comma exec mpc prev
 bindsym $mod+period exec mpc next
+
+# bind compose key
+exec --no-startup-id setxkbmap -option compose:caps

@@ -1,0 +1,1 @@
+exec_always --no-startup-id "convert -scale 1920x1080 $(cat ~/.cache/wal/wal) /tmp/lock.png"

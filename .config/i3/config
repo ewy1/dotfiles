@@ -3,4 +3,4 @@ set $mod Mod4
 
 # Include the split config files and machine-specific config
 include "~/.config/i3/config.d/*"
-include "~/.config/i3/machines.d/`hostname`/*"
+# include "~/.config/i3/machines.d/`hostname`/*"
