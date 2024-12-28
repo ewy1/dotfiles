@@ -1,0 +1,61 @@
+@import url("/home/ewout/.cache/wal/colors-waybar.css");
+
+window#waybar {
+	background-color: @background;
+}
+
+window#waybar.empty {
+	background-color: transparent;
+}
+
+.module {
+ 	color: @foreground;
+	background-color: @background;
+ 	border-bottom: 2px solid @color1;
+	padding: 0 8px;
+	margin: 0 2px;
+}
+
+.module:first-child {
+	margin-left: 0;
+}
+
+.module:last-child {
+	margin-right: 0;
+}
+
+#clock {
+	padding-right: 4px;
+	border-color: @color2;
+}
+
+#tray {
+	border-color: @color3;
+}
+
+#temperature {
+	border-color: @color4;
+}
+
+#memory {
+border-color: @color7;
+}
+
+#load {
+	border-color: @color6;
+}
+
+#network {
+	border-color: @color7;
+}
+
+#workspaces button {
+	min-width: 32px;
+	border-radius: 0;
+	color: @foreground;
+}
+
+#workspaces button.visible {
+	background-color: @foreground;
+	color: @background;
+}

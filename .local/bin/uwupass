@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+
+### BEFORE USE ###
+# 1. Create .config/uwupass
+# 2. Set the following variables in it:
+#    DATABASE (path to keepass db) (REQUIRED)
+#    PGP_KEY (path to your pgp encrypted password file) (REQUIRED)
+#    DMENU (dmenu script to feed options into, will fall back to dmenu)
+#    KEYFILE (if you have a keyfile encrypted db)
+#    YUBIKEY (if you have a yubikey encrypted db)
+###
+
+# Load configuration script
+set -euo pipefail
+config="${XDG_CONFIG_HOME:-$HOME/.config}/uwupass"
+
+message() {
+    notify-send -u low "uwupass" "$@"
+}
+
+if [[ -e $config ]]; then
+    source "$config"
+else
+    message "Configuration file not found; check the source code for more information."
+    exit 1
+fi
+
+if [[ -z ${DATABASE} || -z ${PGP_KEY} ]]; then
+    message "Required settings not specified; check the source code for more information."
+    exit 1
+fi
+
+if ! command -v keepassxc-cli; then
+    message "keepassxc-cli not found; please install keepassxc-cli."
+    exit 1
+fi
+
+if ! command -v gpg; then
+    message "gpg not found; please install gpg."
+    exit 1
+fi
+
+# Compose the database opening command
+dbQuery() {
+    command="keepassxc-cli $*"
+    [[ -e ${KEYFILE:-} ]] && command="$command -k $KEYFILE"
+    [[ -e ${YUBIKEY:-} ]] && command="$command -y"
+    command="$command $DATABASE"
+    # Don't use message here, because this essentially returns a value
+    echo "$command"
+}
+
+# Decrypt the pgp password
+pass=$(gpg --decrypt "$PGP_KEY")
+# Send the entries to dmenu
+entry=$(echo "$pass" | eval "$(dbQuery ls -R -f)" | ${DMENU:-dmenu} -p "Select entry")
+
+# Retreive the target password
+target=$(echo "$pass" | eval "$(dbQuery show -s)" -a Password \"$entry\")
+
+
+# Write the password
+ydotool type "$target"
+message "Finished writing password."
+
+# Copy TOTP to clipboard
+totp="$(echo "$pass" | eval "$(dbQuery show -s -t)" \"$entry\")"
+echo $totp
+if [[ -n "$totp" ]]; then
+    message "Copied TOTP ($totp) to selection."
+    echo "$totp" | wl-copy
+fi
+

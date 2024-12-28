@@ -1,0 +1,8 @@
+[Unit]
+Description=Connect your computer to your smartphone or tablet
+
+[Service]
+ExecStart=env QT_QPA_PLATFORM=wayland /usr/bin/kdeconnectd
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,10 @@
+[Unit]
+Description=sway window manager session
+PartOf=graphical-session.target
+Wants=graphical-session.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/bin/true
+Restart=never

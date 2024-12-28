@@ -1,0 +1,9 @@
+[Unit]
+Description=run pywal
+
+[Service]
+Type=oneshot
+ExecStart=wal -i "%h/Pictures/Wallpapers"
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,21 @@
+@theme "/usr/share/rofi/themes/gruvbox-dark-hard.rasi"
+@import "~/.cache/wal/colors-rofi-dark.rasi"
+
+configuration {
+	modi: "combi";
+	font: "Operator Mono Book 12";
+	comb-modi: "window,drun,ssh,run";
+	icon-theme: "Papirus";
+}
+
+#window {
+	border: 2px;
+	border-color: @selected-normal-foreground;
+}
+
+#inputbar {
+	border: 0px 0px 2px 0px;
+	border-color: @selected-normal-foreground;
+}
+
+

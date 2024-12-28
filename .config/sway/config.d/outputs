@@ -1,0 +1,14 @@
+output * {
+	background "$(cat $HOME/.cache/wal/wal)" fit
+}
+
+output DP-2 {
+	resolution 2560x1440@239.970Hz
+	position 0,0
+}
+
+output HDMI-A-1 {
+	resolution 1920x1080@60.000Hz
+	position 2560,0
+}
+
