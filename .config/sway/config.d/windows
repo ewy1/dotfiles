@@ -1,10 +1,11 @@
-for_window [app_id="kitty"] border none
-for_window [class="firefox"] border none
 for_window [title="Picture-in-Picture"] {
 	sticky		enabe
 	floating 	enable
 	position 	2567,619
 	size		791x445
 }
-for_window [class="net-runelite-client-RuneLite"] border none
-for_window [app_id="firefox"] border none
+for_window [app_id="pavucontrol"] {
+	floating enable
+	move position 1900px 0px
+	resize set 800 400
+}

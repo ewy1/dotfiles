@@ -1,0 +1,10 @@
+exec --no-startup-id kitty --app-id quake
+
+for_window [app_id="quake"] {
+	floating enable,
+	border none,
+	move container to scratchpad,
+	sticky
+}
+
+bindsym $mod+Shift+Return [app_id="quake"] scratchpad show, resize set width 400 height 400, move position cursor, border pixel

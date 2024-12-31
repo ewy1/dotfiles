@@ -2,3 +2,4 @@ smart_gaps on
 gaps inner 5
 title_align center
 default_border pixel
+smart_borders on

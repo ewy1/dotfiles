@@ -11,13 +11,12 @@
         "sway/workspaces",
         "sway/mode",
         "sway/scratchpad",
-	"mpris"
     ],
     "modules-center": [
         "sway/window"
     ],
     "modules-right": [
-        "custom/headset",
+	"mpris",
         "pipewire",
         "load",
         "memory",
@@ -103,13 +102,5 @@
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "Disconnected ⚠",
         "format-alt": "{ifname}: {ipaddr}/{cidr}"
-    },
-    "custom/headset": {
-	"exec": "headsetcontrol -b -o json | jq -r '.devices[0].battery.level'",
-	"exec-if": "headsetcontrol --connected",
-	"format": "󰋎  {} %",
-	"hide-empty-text": true,
-	"interval": 60,
-	"hide-empty-text": true
     }
 }
