@@ -1,4 +1,5 @@
 autoload colors && colors
+setopt prompt_subst
 
 __git() {
 	command -v git > /dev/null || return
