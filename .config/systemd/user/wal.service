@@ -3,7 +3,7 @@ Description=run pywal
 
 [Service]
 Type=oneshot
-ExecStart=wal -i "%h/Pictures/Wallpapers"
+ExecStart=wal -i "%h/Pictures/Wallpapers" -o /usr/bin/walcord
 
 [Install]
 WantedBy=default.target
