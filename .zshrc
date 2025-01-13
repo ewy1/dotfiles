@@ -1,6 +1,7 @@
 setopt completealiases
 alias dotfiles='/usr/bin/git --git-dir="$HOME/.dotfiles/" --work-tree="$HOME"'
 
+zmodload zsh/zprof
 ZSH_CUSTOM="$HOME/.config/zsh"
 ZSH_THEME="funky"
 zstyle ':omz:update' mode auto
@@ -11,7 +12,6 @@ plugins=(
 	cp
 	copyfile
 	copypath
-	emoji
 	git
 	git-commit
 	git-escape-magic
@@ -35,3 +35,4 @@ plugins=(
 )
 
 . /usr/share/oh-my-zsh/oh-my-zsh.sh
+zprof
