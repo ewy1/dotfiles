@@ -165,6 +165,7 @@ bindsym $mod+r mode "resize"
 
 include "$HOME/.cache/wal/colors-sway"
 include "$HOME/.config/sway/config.d/*"
+include "$HOME/.config/sway/hosts/$(cat /etc/hostname)/*'
 include /etc/sway/config.d/*
 
 exec sleep 5 && systemctl --user start sway-session.service
