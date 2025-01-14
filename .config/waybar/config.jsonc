@@ -29,7 +29,8 @@
 	"format": "  {}"
     },
     "pulseaudio": {
-	"format": "󰓃  {volume}%"
+	"format": "󰓃  {volume}%",
+	"format-muted": "<s>󰓃  {volume}%</s>"
     },
     "battery": {
 	"format": "󰁹  {}%"
