@@ -1,0 +1,1 @@
+exec mako --output=$(swaymsg -t get_outputs | jq '.[0].name')
