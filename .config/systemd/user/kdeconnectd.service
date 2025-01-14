@@ -2,7 +2,9 @@
 Description=Connect your computer to your smartphone or tablet
 
 [Service]
-ExecStart=env QT_QPA_PLATFORM=wayland /usr/bin/kdeconnectd
+ExecStart=/usr/bin/kdeconnectd
+Restart=on-failure
+RestartSec=5
 
 [Install]
 WantedBy=default.target
