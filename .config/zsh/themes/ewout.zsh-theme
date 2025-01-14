@@ -1,6 +1,10 @@
 autoload colors && colors
 setopt prompt_subst
 
+local reset="%{$reset_color%}"
+local red="%{${fg[red]}%}"
+local green="%{${fg[green]}%}"
+
 __git() {
 	command -v git > /dev/null || return
 	[[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == true ]] && echo "󰘬 $(git branch --show-current)"
@@ -18,12 +22,12 @@ __exitStatus() {
 
 __exitFace() {
 	code=$1
-	[ $1 = 0 ] && echo "$fg[green]:3$reset_color"
-	[ $1 != 0 ] && echo "$fg[red]D:$reset_color"
+	[ $1 = 0 ] && echo "${green}:3$reset"
+	[ $1 != 0 ] && echo "${red}D:$reset"
 }
 
 __prompt() {
-	echo "%# "
+	echo '%# '
 }
 
 __generate_prompt() {
