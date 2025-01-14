@@ -30,7 +30,8 @@
     },
     "pulseaudio": {
 	"format": "󰓃  {volume}%",
-	"format-muted": "<s>󰓃  {volume}%</s>"
+	"format-muted": "<s>󰓃  {volume}%</s>",
+	"on-click": "pavucontrol"
     },
     "battery": {
 	"format": "󰁹  {}%"
