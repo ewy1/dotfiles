@@ -3,9 +3,12 @@ for_window [title="Picture-in-Picture"] {
 	floating 	enable
 	position 	2567,619
 	size		791x445
+	focus parent
 }
+
 for_window [app_id="pavucontrol"] {
 	floating enable
-	move position 1900px 0px
-	resize set 800 400
+	move position cursor
+	resize set 600 300
+	focus
 }
