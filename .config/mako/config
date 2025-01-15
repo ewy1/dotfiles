@@ -7,6 +7,10 @@ outer-margin=10,0
 layer=overlay
 format=<b>%a </b> %s\n%b
 max-icon-size=64
+padding=0,5,0,0
+
+[app-icon=]
+padding=5
 
 [mode=do-not-disturb]
 invisible=1
