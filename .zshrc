@@ -30,4 +30,6 @@ plugins=(
 	zsh-navigation-tools
 )
 
+alias zluda="LD_LIBRARY_PATH=\"<ZLUDA_DIRECTORY>:$LD_LIBRARY_PATH\""
+
 . /usr/share/oh-my-zsh/oh-my-zsh.sh

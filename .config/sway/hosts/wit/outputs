@@ -1,9 +1,16 @@
-output DP-2 {
+set $right "Philips Consumer Electronics Company PHL 243V7 AU01809002092"
+set $left "LG Electronics LG ULTRAGEAR+ 303NTZN3Z085"
+
+output $left {
 	resolution 2560x1440@239.970Hz
 	position 0,0
 }
+workspace 1 output $left
 
-output HDMI-A-1 {
+output $right {
 	resolution 1920x1080@60.000Hz
 	position 2560,0
 }
+workspace 2 output $right
+
+exec mako --output "HDMI-A-2"

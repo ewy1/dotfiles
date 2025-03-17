@@ -11,8 +11,8 @@ __git() {
 }
 
 __wrap() {
-	[ -z "$@" ] && return
-	echo "─[$@]─"
+	[ -z "$*" ] && return
+	echo "─[$*]─"
 }
 
 __exitStatus() {

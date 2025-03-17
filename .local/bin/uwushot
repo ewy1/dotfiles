@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euo pipefail
+filename="~/Pictures/Screenshots/satty-$(date '+%Y%m%d-%H:%M:%S').png"
+grim -g "$(slurp -o -r -c '#ff0000ff')" -t ppm - | satty --filename - --disable-notifications --corner-roundness 12 --output-filename "$filename"
+uwuload "$filename"

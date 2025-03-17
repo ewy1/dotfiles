@@ -1,1 +1,9 @@
-bindsym $mod+Print exec grim -g "$(slurp -o -r -c '#ff0000ff')" -t ppm - | satty --filename - --fullscreen --output-filename ~/Pictures/Screenshots/satty-$(date '+%Y%m%d-%H:%M:%S').png
+bindsym $mod+Print exec uwushot
+for_window [app_id="satty"] {
+	fullscreen disable
+	move container to output HDMI-A-2
+	resize set width 660
+	resize set height 400
+	move position 32 32
+	border none
+}

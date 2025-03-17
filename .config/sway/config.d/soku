@@ -1,0 +1,5 @@
+for_window [instance="th123.exe"] {
+	floating enable
+	resize set 1920x1440
+	position set 320,0
+}

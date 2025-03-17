@@ -1,4 +1,4 @@
 output * {
-	background "$(cat $HOME/.cache/wal/wal)" fill
+	background "$(cat $HOME/.cache/wal/wal)" fit
 }
 

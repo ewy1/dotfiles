@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -euo pipefail
+filename=$(basename "$@")
+rsync -r --progress --stats "$@" "root@ewy.one:/srv/uwu/$filename"
+url="https://uwu.ewy.one/$filename"
+echo "$url" | wl-copy
+message="Uploaded $filename to uwu; copied result URL to clipboard."
+notify-send -a uwuload -i /usr/share/icons/Papirus-Dark/128x128/devices/network-server.svg "$message"
