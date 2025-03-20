@@ -1,4 +1,9 @@
+set $xkb_options compose:ralt
 input type:pointer {
 	accel_profile flat
 	pointer_accel 1
+}
+
+input type:keyboard {
+	xkb_options $xkb_options
 }
