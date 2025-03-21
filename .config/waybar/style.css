@@ -55,7 +55,12 @@ border-color: @color7;
 	color: @foreground;
 }
 
-#workspaces button.visible {
+#workspaces button.visible,
+#workspaces button.focused {
 	background-color: @foreground;
 	color: @background;
+}
+
+#workspaces button.empty {
+	opacity: 0.5;
 }

@@ -127,7 +127,6 @@ environment {
 	DISPLAY ":0"
 }
 spawn-at-startup "waybar"
-spawn-at-startup "sh -c 'swaybg -i $(cat ~/.cache/wal/wal)'"
 spawn-at-startup "xwayland-satellite"
 
 prefer-no-csd
@@ -171,6 +170,10 @@ window-rule {
 window-rule {
     geometry-corner-radius 8
     clip-to-geometry true
+}
+
+hotkey-overlay {
+	skip-at-startup
 }
 
 binds {
